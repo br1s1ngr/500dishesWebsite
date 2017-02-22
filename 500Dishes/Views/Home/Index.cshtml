@@ -1,0 +1,323 @@
+﻿@model ICollection<_500Dishes.Models.Meal>
+@{
+    ViewBag.Title = "Home";
+}
+@if (TempData["SubscriptionError"] != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @(TempData["SubscriptionError"] as string)
+    </div>
+}
+@if (TempData["MealSuccess"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @(TempData["MealSuccess"] as string)
+    </div>
+}
+@if (TempData["ConfirmationMessage"] != null)
+{
+    <div class="alert alert-dismissable alert-info">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @(TempData["ConfirmationMessage"] as string)
+    </div>
+}
+
+
+<div class="home-page">
+   
+    <main class="main-content">
+        <section class="home-hero">
+            <div class="home-hero-overlay">
+                <div class="container">
+                    <div class="home-hero-content text-center">
+                        <div class="center">
+                            <div class="h1">Get Your Food without Hastle</div>
+                            <p class="h4">
+                                SpotyFoods Lorem Khaled Ipsum is a major key to success. <br>Major key, don’t
+                                fall. Major key, don’t
+                            </p>
+                            <a class="btn btn-base btn-lg text-uppercase" href="#location_setup">Explore our menu</a>
+                        </div>
+                        @*<div class="bottom hidden-xs">
+                            <img src="img/heart-white.png" alt="">
+                            <div class="h3">Made with love from Lagos Nigeria</div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12"><div class="h1 text-center" id="popular-meals">Our Popular Meals</div></div>
+            </div>
+        </div>
+        <div class="container-fluid" id="menu-section">
+            <section class="menu-section">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="thumbnail ">
+                            <img src="~/Images/food3.jpg" alt="">
+                            <div class="caption">
+                                <h4 class="text-uppercase">ofada rice and ayamase sauce</h4>
+                                <div class="row actions-row">
+                                    <div class="col-md-6 col-xs-12 pull-left">
+                                        <h4>
+                                            <button type="button" class="text-muted add-to-menu btn btn-lg btn-no-bg">
+                                                <i class="icon ion-android-restaurant"></i> Order Now
+                                            </button>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="thumbnail ">
+                            <img src="~/Images/food2.jpg" alt="">
+                            <div class="caption">
+                                <h4 class="text-uppercase">ofada rice and ayamase sauce</h4>
+
+                                <div class="row actions-row">
+                                    <div class="col-md-6 col-xs-12 pull-left">
+                                        <h4>
+                                            <button type="button" class="text-muted add-to-menu btn btn-lg btn-no-bg">
+                                                <i class="icon ion-android-restaurant"></i> Order Now
+                                            </button>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="thumbnail ">
+                            <img src="~/Images/food1.jpg" alt="">
+                            @*<div class="food-amount">
+                                <p><b>&#8358; 3,500</b></p>
+                            </div>*@
+                            <div class="caption">
+                                <h4 class="text-uppercase">ofada rice and ayamase sauce</h4>
+
+                                <div class="row actions-row">
+                                    <div class="col-md-6 col-xs-12 pull-left">
+                                        <h4>
+                                            <button type="button" class="text-muted add-to-menu btn btn-lg btn-no-bg">
+                                                <i class="icon ion-android-restaurant"></i> Order Now
+                                            </button>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="thumbnail ">
+                            <img src="~/Images/food3.jpg" alt="">
+                            @*<div class="food-amount">
+                                <p><b>&#8358; 3,500</b></p>
+                            </div>*@
+                            <div class="caption">
+                                <h4 class="text-uppercase">ofada rice and ayamase sauce</h4>
+
+                                <div class="row actions-row">
+                                    <div class="col-md-6 col-xs-12 pull-left">
+                                        <h4>
+                                            <button type="button" class="text-muted add-to-menu btn btn-lg btn-no-bg">
+                                                <i class="icon ion-android-restaurant"></i> Order Now
+                                            </button>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="thumbnail ">
+                            <img src="~/Images/food2.jpg" alt="">
+                            @*<div class="food-amount">
+                                <p><b>&#8358; 3,500</b></p>
+                            </div>*@
+                            <div class="caption">
+                                <h4 class="text-uppercase">ofada rice and ayamase sauce</h4>
+
+                                <div class="row actions-row">
+                                    <div class="col-md-6 col-xs-12 pull-left">
+                                        <h4>
+                                            <button type="button" class="text-muted add-to-menu btn btn-lg btn-no-bg">
+                                                <i class="icon ion-android-restaurant"></i> Order Now
+                                            </button>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="thumbnail ">
+                            <img src="~/Images/food1.jpg" alt="">
+                            @*<div class="food-amount">
+                                <p><b>&#8358; 3,500</b></p>
+                            </div>*@
+                            <div class="caption">
+                                <h4 class="text-uppercase">ofada rice and and ayamase sauce</h4>
+
+                                <div class="row actions-row">
+                                    <div class="col-md-6 col-xs-12 pull-left">
+                                        <h4>
+                                            <button type="button" class="text-muted add-to-menu btn btn-lg btn-no-bg">
+                                                <i class="icon ion-android-restaurant"></i> Order Now
+                                            </button>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="col-sm-3">
+                        <div class="thumbnail ">
+                            <img src="~/Images/food3.jpg" alt="">
+                            <div class="caption">
+                                <h4 class="text-uppercase">ofada rice and ayamase sauce</h4>
+                                <div class="row actions-row">
+                                    <div class="col-md-6 col-xs-12 pull-left">
+                                        <h4>
+                                            <button type="button" class="text-muted add-to-menu btn btn-lg btn-no-bg">
+                                                <i class="icon ion-android-restaurant"></i> Order Now
+                                            </button>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="location_setup">
+                    <div class="col-md-12 text-center">
+                        @if (Session["LocationID"] == null)
+                        {
+                            @*@Html.RenderPartial("AvailableMenu")*@
+                        using (Html.BeginForm("AvailableMenu", "Home"))
+                        {
+                            Html.AntiForgeryToken();
+                            <div class="form-group form-inline">
+                                @Html.DropDownList("location", ViewBag.Locations as SelectList, "Select a location", new { @class = "form-control", @required = "required" })
+                                <input type="submit" value="View Meals in Location" class="btn btn-lg btn-warning" />
+                                @*@Ajax.ActionLink("View Meals in Location", "AvailableMenu", null, new AjaxOptions { UpdateTargetId = "meals" }, new { @class = "btn btn-info" })*@
+                                <span class="clearfix"></span>
+                            </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="feature-meal">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 feature-meal-text text-center">
+                        <div class="center-block">
+                            <div class="h2">SpotyFoods & Buka Hut Promo</div>
+                            <p class="h4">
+                                Get a set of five 3″x 5″ chicken wing from Buka Hut for FREE when you spend
+                                &#8358; 7,500 or more! All you have to do is add the blank cards to your cart and
+                                copy the code below in the checkout section.
+                            </p>
+                            <a href="menu.html" class="btn btn-base btn-lg text-uppercase">order now</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 feature-meal-image-section hidden-xs">
+                        <div class="feature-meal-image"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="info-section">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">contact</div>
+                        <div class="h4 text-muted">
+                            <p><i class="icon ion-android-pin"></i> 278 Park Street, Lekki Phase One, Lagos Nigeria</p>
+
+                            <p><i class="icon ion-android-mail"></i> hello@spotyfoods.com</p>
+
+                            <p><i class="icon ion-android-phone-portrait"></i> 09053588783</p>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">hours</div>
+                        <ul class="list-unstyled">
+                            <li class="h4 text-muted">Monday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Tuesday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Wednesday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Thursday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Friday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Saturday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Sunday 11:30AM - 9:00PM</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">newsletter</div>
+                        <div class="h4 text-muted text-uppercase">
+                            Join our mailing list to receive s, announcements and promotions from spoty foods
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <input type="email" class="form-control text-uppercase" placeholder="Your Email Address"
+                                       name="subscribe_email">
+                            </div>
+                            <input type="submit" value="subscribe" class="btn btn-base text-uppercase">
+                        </form>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+        <div class="row" id="meals">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <img src="~/Images/Meals/@item.ImagePath" class="img-responsive" />
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                    <span class="lead text-muted">@item.Name</span><br />
+                                    @item.Description
+                                    <br />
+                                    @*@Html.ActionLink("Pick", "AddMeal", "Customer", new { id = @item.ID }, new { @class = "btn btn-default" })
+                                        <br />*@
+                                    <div style="display:block">
+                                        <img class="img-responsive pull-left" style="width:40px; height:40px; margin-right: 20px;" src="~/Images/Vendors/@item.Vendor.ImagePath" />
+                                        <div>
+                                            <span class="text-danger">@item.Vendor.BrandName</span>
+                                            <br />
+                                            <span>
+                                                Rating--
+                                                @if (item.Reviews.Count > 0)
+                                                { @item.GetRating();
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    @Html.ActionLink("Order", "OrderMeal", "Customer", new { id = @item.ID }, new { @class = "btn btn-info" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+</div>

@@ -1,0 +1,69 @@
+﻿@model _500Dishes.Models.Order
+
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Order</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Customer Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+
+        <dt>
+            Meal
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Meal.Name)
+        </dd>
+        <dt>
+            Vendor
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendor.BrandName)
+        </dd>
+        <dt>
+            Delivery Address
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            Phone
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt>
+            Alternate Phone
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AltPhone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            Review
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Review.Text)
+        </dd>
+
+    </dl>
+</div>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

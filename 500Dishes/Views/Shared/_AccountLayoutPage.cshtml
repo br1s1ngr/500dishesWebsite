@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpotyFoods | @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700|Scope+One" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+</head>
+<body class="spoty-foods">
+    <header>
+        <nav class="navbar navbar-default" id="secondary-nav">
+            <div class="container">
+                <ul class="nav navbar-nav hidden-xs">
+                    <li><a href="#"><i class="icon ion-social-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon ion-social-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon ion-social-instagram"></i></a></li>
+                </ul>
+                @if (!Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("Login", "Account")" class="text-uppercase"><i class="icon ion-log-in"></i> login</a></li>
+                        <li>
+                            <a href="@Url.Action("SignUp", "Account")" class="text-uppercase"><i class="icon ion-android-person-add"></i> register</a>
+                        </li>
+                        <li><a href="@Url.Action("VendorSignUp", "Account")" class="text-uppercase"><i class="icon ion-coffee"></i> become a vendor</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (User.IsInRole("A"))
+                        {
+                            <li><a href="@Url.Action("Index", "Admin")" class="text-uppercase"><i class="icon glyphicon glyphicon-user"></i> @User.Identity.Name</a></li>
+                        }
+                        @if (User.IsInRole("V"))
+                        {
+                            <li><a href="@Url.Action("Index", "Vendor")" class="text-uppercase"><i class="icon glyphicon glyphicon-user"></i> @User.Identity.Name</a></li>
+                        }
+                        @if (User.IsInRole("U"))
+                        {
+                            <li><a href="@Url.Action("Index", "Customer")" class="text-uppercase"> <i class="icon glyphicon glyphicon-user"></i>  @User.Identity.Name</a></li>
+                        }
+                        <li><a href="@Url.Action("SignOut", "Account")" class="text-uppercase"> <i class="icon glyphicon glyphicon-log-out"></i>  Log Out</a></li>
+                    </ul>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <div>
+        @RenderBody()
+        <hr />
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 pull-left">
+                        <p>&copy; @DateTime.Now.Year ELIXIR. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 col-xs-6 pull-right">
+                        <ul class="list-unstyled">
+                            <li class="pull-right"><a href="#"><i class="icon ion-social-instagram"></i></a></li>
+                            <li class="pull-right"><a href="#"><i class="icon ion-social-twitter"></i></a></li>
+                            <li class="pull-right"><a href="#"><i class="icon ion-social-facebook"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    
+    @RenderSection("scripts", required: false)
+</body>
+</html>

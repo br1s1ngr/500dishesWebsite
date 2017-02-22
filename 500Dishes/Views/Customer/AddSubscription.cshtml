@@ -1,0 +1,214 @@
+﻿@model _500Dishes.Models.SubscriptionsViewModel
+
+@{
+    ViewBag.Title = "AddSubscription";
+    Layout = "~/Views/Shared/_ClientLayoutPage.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @Html.Raw(TempData["SuccessMessage"] as string)
+    </div>
+}
+@if (TempData["UserSubscriptionMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @Html.Raw(TempData["UserSubscriptionMessage"] as string)
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @Html.Raw(TempData["ErrorMessage"] as string)
+    </div>
+}
+@*<p class="text-success success">@ViewBag.SuccessMessage</p>
+<p class="text-danger danger">@ViewBag.ErrorMessage</p>*@
+    
+@if (Model.UserSub != null)
+{
+    <div>
+        <h3>Current Subscription</h3>
+        <dl class="dl-horizontal">
+            <dt>Name : </dt>
+            <dd>@Model.UserSub.SubPlan.Name</dd>
+            <dt>Amount : </dt>
+            <dd>@Html.Raw("&#8358; ") @(Model.UserSub.SubPlan.Amount.ToString("N"))</dd>
+            <dt>Start Date : </dt>
+            <dd>@Model.UserSub.StartDate.Value.ToString("dd-MM-yyyy")</dd>
+            <dt>End Date : </dt>
+            <dd>@((Model.UserSub.EndDate) == null ? "" : Model.UserSub.EndDate.Value.ToString("dd-MM-yyyy")) </dd>
+        </dl>
+    </div>
+    <hr />
+}
+
+<h3>All Subscription Plans</h3>
+<table class="table table-condensed table-hover table-responsive">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Meals/Day
+        </th>
+        <th>
+            Drinks/Meal
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.AllPlans)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            &#8358; @item.Amount.ToString("N")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoOfMeals)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DrinksPerMeal)
+        </td>
+        <td>
+            @if (Model.UserSub != null && item.ID == Model.UserSub.SubID)
+            {
+                <span class="text-success">Subscribed</span>
+                
+                if (!Model.UserSub.Enabled) { 
+                    using (Html.BeginForm("EnableSubscription", "Customer", new { userSubID = Model.UserSub.ID, subID = Model.UserSub.SubID }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Activate Subscription" class="btn btn-default" />
+                    }
+                    @*@Html.ActionLink("Activate Subscription", "EnableSubscription", new { subID = @Model.UserSub.SubID }, new { @class= "btn btn-default"} )*@
+                }
+            }
+            else { 
+            <a data-toggle="modal" href="#new-subscription" class="btn btn-info" data-subid="@item.ID" data-subname="@item.Name">Subscribe</a>
+            }
+        </td>
+    </tr>
+}
+
+</table>
+
+@*<input type="button" value="Click To Test" onclick="submitForm()" />*@
+
+@section Scripts {
+    <script type="text/javascript">
+    $(function () {
+        $('#new-subscription').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('subid')
+            var name = button.data('subname')
+            console.log("id => "+ id)
+            console.log("name => " + name)
+            var modal = $(this)
+            modal.find('.subscription-id').val(id)
+            modal.find('#subName').html(name)
+        });
+    });
+    @*function submitForm() {
+        var roles = {
+            "event": "subscription.create",
+            "data": {
+                "domain": "test",
+                "status": "active",
+                "subscription_code": "SUB_vsyqdmlzble3uii",
+                "amount": 50000,
+                "cron_expression": "0 0 28 * *",
+                "next_payment_date": "2016-05-19T07:00:00.000Z",
+                "open_invoice": null,
+                "createdAt": "2016-03-20T00:23:24.000Z",
+                "plan": {
+                    "name": "Monthly retainer",
+                    "plan_code": "PLN_gx2wn530m0i3w3m",
+                    "description": null,
+                    "amount": 50000,
+                    "interval": "monthly",
+                    "send_invoices": true,
+                    "send_sms": true,
+                    "currency": "NGN"
+                },
+                "authorization": {
+                    "authorization_code": "AUTH_96xphygz",
+                    "bin": "539983",
+                    "last4": "7357",
+                    "exp_month": "10",
+                    "exp_year": "2017",
+                    "card_type": "MASTERCARD DEBIT",
+                    "bank": "GTBANK",
+                    "country_code": "NG",
+                    "brand": "MASTERCARD"
+                },
+                "customer": {
+                    "first_name": "BoJack",
+                    "last_name": "Horseman",
+                    "email": "bojack@horsinaround.com",
+                    "customer_code": "CUS_xnxdt6s1zg1f4nx",
+                    "phone": "",
+                    "metadata": {}
+                }
+            }
+        };
+
+        jQuery.ajax({
+            type: "POST",
+            url: "@Url.Action("EventManager", "PayStackEvents")",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(roles),
+                    success: function (data) { alert(data); },
+                    failure: function (errMsg) {
+                        alert(errMsg);
+                    }
+                });
+
+                var url ="@Url.Action("EventManager", "PayStackEvents")";
+                console.log("url => " + url);
+
+            }*@
+
+    </script>
+}
+
+
+
+<div class="modal fade" id="new-subscription" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Subscription</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Are you sure you want to subscribe to <strong><span class="text-danger" id="subName"></span></strong></p>
+                @using (Html.BeginForm("AddSubscription", "Customer", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="subID" class="subscription-id">
+                    <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

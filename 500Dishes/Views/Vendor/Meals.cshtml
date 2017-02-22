@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.Meal>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Meal";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+}
+
+<h2>Meals</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddMeal")
+</p>
+
+<div class="container">
+    <div class="row">
+      @foreach (var item in Model)
+      {
+        <div class="media">
+            <div class="media-left pull-left">
+                <a href="#">
+                    <img class="media-object img-responsive" style="height:100px" src="~/Images/Meals/@item.ImagePath" />
+                </a>
+            </div>
+            <div class="media-body media-right">
+                <span class="lead">@item.Name</span> <br />
+                <span class="text-muted">@item.Description</span> <br />
+                Orders : <strong>@item.Orders.Count</strong> <br />
+                Verified : <strong>@item.Verified</strong> <br />
+                <a href="#edit-meal" class="btn" data-toggle="modal" data-whatever="@item.ID">Edit</a> |
+                <a href="#delete-meal" class="btn" data-toggle="modal" data-whatever="@item.ID">Delete</a>
+            </div>
+        </div>
+            <span class="clearfix"></span>
+        }
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+        @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Meals", new { page }))
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('#delete-meal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var id = button.data('whatever')
+                var modal = $(this)
+                modal.find('.meal-id').val(id)
+            });
+
+            $('#edit-meal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var mealID = button.data('whatever');
+                var link = '@Url.Action("EditMeal", "Vendor")' + '/' + mealID;
+                $.ajax({
+                    url: link,
+                    success: function (result) {
+                        $("#editMeal").html(result);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+}
+
+<div class="modal fade" id="delete-meal" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Delete</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Are you sure you want to delete the meal ?</p>
+
+                @using (Html.BeginForm("DeleteMeal", "Vendor", new { }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" class="meal-id">
+                    <button type="submit" class="btn btn-primary text-uppercase">Delete</button>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit-meal" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Edit Meal</h2>
+            </div>
+            <div class="modal-body">
+                <div id="editMeal">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

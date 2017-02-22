@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.Order>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Orders</h2>
+
+<table class="table table-condensed table-hover table-responsive">
+    <tr>
+        <th>
+            Customer Name
+        </th>
+        <th>
+            Meal
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Review.Text)
+        </th>*@
+        <th>
+           Vendor
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AltPhone)
+        </th>*@
+        <th>
+            Date
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Meal.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vendor.BrandName)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AltPhone)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.ActionLink("Select", "Order", new { id = item.OrderID }, new { @class = "btn" })
+            @*@Html.ActionLink("Details", "Details", new { id=item.OrderID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderID })*@
+        </td>
+    </tr>
+}
+</table>
+
+<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+    @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Orders", new { page }))
+</div>

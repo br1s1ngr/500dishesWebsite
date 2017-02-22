@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.User>
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "AllCustomers";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>AllCustomers</h2>
+
+@if (TempData["CustomerMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissable" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @TempData["CustomerMessage"].ToString()
+    </div>
+}
+
+<table class="table table-responsive table-hover table-condensed">
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>@Html.ActionLink("Select", "Customer", new { id = @item.UserID }, new { @class = "btn" })</td>
+        </tr>
+    }
+
+</table>
+
+<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+    @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("AllCustomers", new { page }))
+</div>

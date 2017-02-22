@@ -1,0 +1,942 @@
+/*General Styling*/
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    font-family: "Scope One", serif;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+.avatar {
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 1.4rem;
+    font-weight: 300;
+    height: 3.2rem;
+    line-height: 1;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+    width: 3.2rem;
+}
+
+.avatar.avatar-xs {
+    font-size: .8rem;
+    height: 1.6rem;
+    width: 1.6rem;
+}
+
+.avatar.avatar-sm {
+    font-size: 1rem;
+    height: 2.4rem;
+    width: 2.4rem;
+}
+
+.avatar.avatar-lg {
+    font-size: 2rem;
+    height: 4.8rem;
+    width: 4.8rem;
+}
+
+.avatar.avatar-xl {
+    font-size: 2.6rem;
+    height: 6.4rem;
+    width: 6.4rem;
+}
+
+.avatar.avatar-xxl {
+    font-size: 2.6rem;
+    height: 10.4rem;
+    width: 10.4rem;
+}
+
+.avatar img {
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+}
+
+.avatar .avatar-icon {
+    background-color: #fff;
+    bottom: -.2em;
+    height: 50%;
+    padding: 5%;
+    position: absolute;
+    right: -.2em;
+    width: 50%;
+}
+
+.avatar[data-initial]::after {
+    color: #fff;
+    content: attr(data-initial);
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.main-content {
+    min-height: 100%;
+}
+
+.spoty-foods .navbar-default {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.spoty-foods .h1, .spoty-foods .h2, .spoty-foods .h3 {
+    font-family: 'Roboto', sans-serif;
+}
+
+.footer {
+    background: rgba(0, 0, 0, 1);
+    color: #fff;
+    padding: 20px 0;
+}
+
+.footer .icon {
+    color: #fff;
+    font-size: 20px;
+    margin-left: 15px;
+}
+
+.spoty-foods .btn {
+    border-radius: 3px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.spoty-foods .btn:focus, .spoty-foods .btn:hover {
+    outline: none;
+}
+
+/*General Styling end*/
+
+/*Menu styling*/
+
+.menu-hero {
+    background: url("../Images/food10.jpg") no-repeat center center /cover;
+    width: 100%;
+    max-width: 100%;
+    height: 40vh;
+}
+
+.menu-hero-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.menu-hero-content {
+    color: #fff;
+}
+
+.menu-hero-content .h2 {
+    font-size: 45px;
+}
+
+.search-section {
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    left: 0;
+    background: #fff;
+    margin-bottom: 100%;
+    top: 0;
+    padding-bottom: 20px;
+}
+
+.search-section .form-control {
+    border-radius: 0;
+    background: #fafafa;
+}
+
+.base-color {
+    color: #fec200;
+}
+
+.btn-base {
+    background: #fec200;
+    color: #fff;
+    border-color: #fec200;
+    border-radius: 3px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn-base:hover, .btn-base:focus {
+    background: #fec200;
+    color: #fff;
+    border-color: #fec200;
+    outline: none;
+}
+
+.food-amount {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: #fec200;
+    color: white;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    padding: 20px 5px;
+}
+
+.actions-row {
+    margin-top: 15px;
+}
+
+.info-section {
+    padding-bottom: 30px;
+}
+
+.info-section .form-control {
+    border-radius: 0;
+}
+
+.menu-section {
+    padding: 40px 100px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #f2f2f2;
+}
+
+.menu-section .thumbnail {
+    border: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.add-to-menu:hover {
+    cursor: pointer;
+}
+
+.btn-no-bg {
+    background: transparent;
+    padding: 0;
+}
+
+.menu-page .pagination > li > a, .menu-page .pagination > li > span {
+    font-size: 17px;
+}
+
+.cart {
+    font-size: 1.5em;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    background: #fec200;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    padding: 0.695em;
+}
+
+.cart .ion-android-cart {
+    font-size: 25px;
+}
+
+.no-touch .cart:focus,
+.no-touch .cart:hover {
+    color: #fff;
+    outline: none;
+}
+
+.cart--animate .cart__icon {
+    -webkit-animation: cartAnim .4s forwards;
+    animation: cartAnim .4s forwards;
+}
+
+@-webkit-keyframes cartAnim {
+    50% {
+        opacity: 0;
+        -webkit-transform: translate3d(50px, 0, 0);
+        transform: translate3d(50px, 0, 0);
+    }
+    51% {
+        opacity: 0;
+        -webkit-transform: translate3d(-50px, 0, 0);
+        transform: translate3d(-50px, 0, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes cartAnim {
+    50% {
+        opacity: 0;
+        -webkit-transform: translate3d(50px, 0, 0);
+        transform: translate3d(50px, 0, 0);
+    }
+    51% {
+        opacity: 0;
+        -webkit-transform: translate3d(-50px, 0, 0);
+        transform: translate3d(-50px, 0, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.cart__count {
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 15px;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 15px;
+    height: 15px;
+    margin: -16px 0 0 0;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+    background: #5c5edc;
+}
+
+.cart--animate .cart__count {
+    -webkit-animation: countAnim .4s forwards;
+    animation: countAnim .4s forwards;
+}
+
+@-webkit-keyframes countAnim {
+    50% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 80px, 0);
+        transform: translate3d(0, 80px, 0);
+    }
+    51% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -80px, 0);
+        transform: translate3d(0, -80px, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes countAnim {
+    50% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 80px, 0);
+        transform: translate3d(0, 80px, 0);
+    }
+    51% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -80px, 0);
+        transform: translate3d(0, -80px, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+#primary-nav {
+    padding: 10px 0;
+    background: #fff;
+    border: none;
+    box-shadow: 1px 0 3px 1px rgba(21, 19, 19, 0.12);
+}
+
+#primary-nav .navbar-right li a {
+    color: #fec200;
+    font-family: 'Roboto', sans-serif;
+}
+
+#secondary-nav {
+    background: #000;
+    color: #fff;
+    border: none;
+    min-height: 20px;
+}
+
+#secondary-nav .navbar-nav .icon {
+    font-size: 20px;
+}
+
+#secondary-nav ul li a {
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+#menu-section {
+    padding: 0;
+}
+
+/*Menu styling end*/
+
+/*Authentication styling*/
+.login-hero {
+    background: url("../Images/food1.jpg") no-repeat center /cover;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+}
+
+.login-hero-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.auth-div {
+    background: #fff;
+    border-radius: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.auth-form-section {
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.auth-form-section .h3 {
+    margin-bottom: 15px;
+}
+
+.auth-form-section .btn-success {
+    border-radius: 3px;
+    margin-top: 20px;
+}
+
+.auth-form-section .checkbox {
+    margin-top: 0;
+}
+
+.auth-form-section .form-control {
+    margin-bottom: 40px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-width: 2px;
+}
+
+.auth-form-section .form-group {
+    position: relative;
+}
+
+.auth-form-section .form-group label {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    z-index: 3;
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    color: #999;
+    line-height: 25px;
+    height: 2px;
+    transition: 0.2s ease all;
+}
+
+.auth-form-section .form-control:focus ~ label,  .auth-form-section .form-control:invalid ~ label {
+    top: -20px;
+    font-size: 10px;
+    color: #5264AE;
+}
+
+.signup-form {
+    display: none;
+}
+
+.form-footer {
+    margin-top: 50px;
+}
+
+/*Authentication styling end*/
+
+/*Account Settings style*/
+.account-hero {
+    background: url("../Images/food9.jpg") no-repeat center center /cover;
+    width: 100%;
+    max-width: 100%;
+    height: 40vh;
+}
+
+.account-hero-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.stuff {
+    color: #fff;
+    background: rgba(254, 194, 0, 0.7);
+}
+
+.account-settings {
+    background: #e6e6e6;
+}
+
+.account-settings .tab-pane {
+    background: #fff;
+    padding: 0 50px;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.account-settings .table {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.account-settings .header {
+    padding-bottom: 20px;
+}
+
+.account-settings .table > tbody > tr > td,
+.account-settings .table > tbody > tr > th,
+.account-settings .table > tfoot > tr > td,
+.account-settings .table > tfoot > tr > th,
+.account-settings .table > thead > tr > td,
+.account-settings .table > thead > tr > th {
+    padding: 15px 8px;
+    font-size: 18px;
+}
+
+.avatar .ion-android-camera {
+    color: #fff;
+    font-size: 30px;
+}
+
+#file-select-xs, #file-select {
+    position: relative;
+    bottom: 30px;
+}
+
+#account-settings-nav {
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 3px;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 10px;
+}
+
+#account-settings-nav .icon {
+    font-size: 18px;
+}
+
+#new-subscription-btn {
+    margin-top: 10px;
+}
+
+#add-subscription-form .form-control {
+    border-radius: 0;
+    background: #fafafa;
+}
+
+/*Account Settings style end*/
+
+/*Our clients style*/
+.clients p {
+    line-height: 1.7;
+}
+
+.clients-hero {
+    background: url("../Images/chef1.jpg") no-repeat top right /cover;
+    width: 100%;
+    max-width: 100%;
+}
+
+.clients-hero-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.clients-hero-content {
+    color: #fff;
+}
+
+.client-testimonials {
+    border-bottom: 1px solid #f8f8f8;
+}
+
+.client-testimonials .container-fluid {
+    padding: 0;
+}
+
+.testimonial-image-section {
+    height: 600px;
+    padding: 0;
+}
+
+.testimonial-image {
+    background: url('../Images/food13.jpg') no-repeat center center/cover;
+    height: 100%;
+    padding: 0 30px;
+}
+
+.client-testimonials-text {
+    height: 600px;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    background: #f8f8fa;
+}
+
+.featured-testimonials blockquote {
+    border: none;
+}
+
+.padded-text {
+    padding: 25px 0;
+}
+
+.featured-clients {
+    padding: 20px 0;
+}
+
+.client-logo {
+    width: 150px;
+}
+
+.logo {
+    width: 100px;
+    position: relative;
+    bottom: 25px;
+}
+
+/*Our clients style end*/
+
+/*Home page styling*/
+.home-hero {
+    background: url("../Images/food14.jpg") no-repeat center / cover;
+    width: 100%;
+    height: 80vh;
+    position: relative;
+}
+
+.home-hero-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.home-hero-content {
+    color: #fff;
+    position: relative;
+    height: 200vh;
+}
+
+.home-hero-content .h1 {
+    font-size: 50px;
+}
+
+.home-hero-content .h4 {
+    font-size: 30px;
+}
+
+.home-hero-content .center-block {
+    position: relative;
+}
+
+.feature-meal {
+    border-bottom: 1px solid #f8f8f8;
+}
+
+.feature-meal .container-fluid {
+    padding: 0;
+}
+
+.feature-meal-image-section {
+    height: 400px;
+    padding: 0;
+}
+
+.feature-meal-image {
+    background: url('../Images/food8.jpg') no-repeat center center/cover;
+    height: 100%;
+}
+
+#popular-meals {
+    padding: 20px 0;
+}
+
+/*Home page styling end*/
+
+/*@media only screen and (max-width: 320px) {
+    .menu-search {
+        max-width: 220px;
+        margin-left: 15px;
+        float: left;
+    }
+}*/
+
+/*Media Queries*/
+@media only screen and (min-width: 320px) {
+    .menu-hero-content {
+        padding-top: 30px;
+    }
+    
+    .menu-section {
+        padding: 40px;
+    }
+
+    .login-hero-content {
+        padding-top: 80px;
+    }
+
+    .account-hero-overlay .h3 {
+        padding-top: 100px;
+        color: #fff;
+        font-size: 50px;
+    }
+
+    .stuff {
+        margin-top: 10%;
+    }
+
+    .clients-hero {
+        height: 90vh;
+    }
+
+    .clients-hero-content {
+        padding-top: 80px;
+    }
+
+    .account-settings {
+        padding: 30px 0;
+    }
+
+    .featured-testimonials {
+        width: 100%; /* full width */
+        height: 300px; /* height of carousel */
+        margin-right: 10px;
+        padding: 0;
+    }
+
+    .testimonials {
+        margin-top: 50px;
+    }
+
+    .center {
+        padding-top: 150px;
+    }
+
+    .feature-meal-text {
+        height: 400px;
+        padding-right: 80px;
+        padding-left: 80px;
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
+
+    .account-hero {
+        height: 60vh;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .feature-meal-text {
+        height: 400px;
+        padding-right: 80px;
+        padding-left: 80px;
+        padding-top: 130px;
+        padding-bottom: 20px;
+    }
+
+    #location_search, #food-search {
+        width: 190px;
+    }
+
+    .menu-hero-content {
+        padding-top: 130px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .menu-section {
+        padding: 40px 100px;
+    }
+
+    .login-hero-content {
+        padding-top: 200px;
+    }
+
+    .account-hero-overlay .h3 {
+        padding-top: 120px;
+        color: #fff;
+        font-size: 50px;
+    }
+
+    .stuff {
+        margin-top: 15%;
+    }
+
+    .stuff .center-block {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+
+    .account-settings {
+        padding: 30px 0;
+    }
+
+    .clients-hero {
+        height: 60vh;
+    }
+
+    .clients-hero-content {
+        padding-top: 150px;
+    }
+
+    .testimonials {
+        margin-top: 50px;
+    }
+
+    .featured-testimonials {
+        width: 100%; /* full width */
+        height: 300px; /* height of carousel */
+        margin-right: 10px;
+        padding: 0;
+    }
+
+    #main-auth-div.center-block {
+        margin-left: 150px;
+        margin-right: 150px;
+    }
+
+    .center {
+        padding-top: 250px;
+    }
+
+    .bottom {
+        padding-top: 180px;
+    }
+
+    .account-hero {
+        height: 40vh;
+    }
+
+    .profile-image {
+        position: absolute;
+        right: 25px;
+    }
+}
+
+@media only screen and (min-width: 1170px) {
+    .feature-meal-text {
+        height: 400px;
+        padding-right: 80px;
+        padding-left: 80px;
+        padding-top: 130px;
+        padding-bottom: 20px;
+    }
+
+    #location_search, #food-search {
+        width: 190px;
+    }
+
+    .menu-hero-content {
+        padding-top: 100px;
+    }
+
+    .menu-section {
+        padding: 40px 100px;
+    }
+
+    .login-hero-content {
+        padding-top: 50px;
+    }
+
+    #main-auth-div.center-block {
+        margin-left: 350px;
+        margin-right: 350px;
+    }
+
+    .account-hero-overlay .h3 {
+        padding-top: 120px;
+        color: #fff;
+        font-size: 50px;
+    }
+
+    .stuff {
+        margin-top: 5%;
+    }
+
+    .stuff .center-block {
+        margin-left: 200px;
+        margin-right: 200px;
+    }
+
+    .account-settings {
+        padding: 20px 0;
+    }
+
+    .clients-hero {
+        height: 60vh;
+    }
+
+    .clients-hero-content {
+        padding-top: 120px;
+    }
+
+    .featured-testimonials {
+        width: 100%; /* full width */
+        height: 300px; /* height of carousel */
+        margin-right: 10px;
+        padding: 0 100px;
+    }
+
+    .testimonials {
+        margin-top: 50px;
+    }
+
+    .center {
+        padding-top: 150px;
+    }
+
+    .bottom {
+        padding-top: 150px;
+    }
+
+    .account-hero {
+        height: 40vh;
+    }
+
+    .profile-image {
+        position: absolute;
+        right: 15px;
+    }
+}

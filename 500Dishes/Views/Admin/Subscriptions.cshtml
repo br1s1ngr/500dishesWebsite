@@ -1,0 +1,124 @@
+﻿@model IEnumerable<_500Dishes.Models.SubscriptionPlan>
+
+@{
+    ViewBag.Title = "Subscriptions";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+@if (TempData["SuccessMsg"] != null)
+{
+    <div class="alert alert-success alert-dismissable" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @TempData["SuccessMsg"].ToString()
+    </div>
+}
+
+<h2>Subscriptions</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateSubscription")
+</p>
+<table class="table table-responsive table-hover table-condensed">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoOfMeals)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DrinksPerMeal)
+        </th>
+        <th>
+            Users Subscribed
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                &#8358; @item.Amount.ToString("N")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfMeals)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DrinksPerMeal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subscribers.Count)
+            </td>
+            <td>
+                <a href="#delete-subscription" data-toggle="modal" data-subid="@item.ID" data-subname="@item.Name" data-subscribers="@item.Subscribers.Count" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="delete-subscription" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Delete Subscription</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="modalBodyHeader"></p>
+                <div id="delete-form">
+                    @using (Html.BeginForm("DeleteSubscription", "Admin", new { }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" class="subscription-id">
+                        <button type="submit" class="btn btn-primary text-uppercase">Delete</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('#delete-subscription').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('subid')
+                var name = button.data('subname')
+                var count = button.data('subscribers')
+                /*console.log("id => "+ id)
+                console.log("name => " + name)
+                console.log("count => " + count)*/
+                //modal.find('#subName').html(name)
+                var modal = $(this)
+                if (count > 0) {
+                    modal.find('#modalBodyHeader').html("There are customers subscribed to <strong>" + name + "</strong>.<br>You cannot delete plan.")
+                    modal.find('#delete-form').css("display", "none")
+                }
+                else {
+                    modal.find('.subscription-id').val(id)
+                    modal.find('#modalBodyHeader').html("Are you sure you want to delete <strong>" + name + "</strong> ?")
+                    modal.find('#delete-form').css("display", "block")
+                }
+                
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,114 @@
+﻿@model _500Dishes.Models.User
+
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Customer</h2>
+
+<div>    
+    <dl class="dl-horizontal">
+        @*<dt></dt>
+        <dd>
+            <img src="~/Images/Vendors/@Model.ImagePath" class="img-responsive img-rounded" style="height:200px; width:200px" />
+        </dd>*@
+        <dt>
+            Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            Subscription
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentSub.Name)
+        </dd>
+        <dt>
+            Phone
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+    </dl>
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default" id="panel1">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-target="#collapseOne" href="#collapseOne">Orders</a>
+                </h3>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <table class="table table-condensed table-hover table-responsive table-striped">
+                        <tr>
+                            <th>Meal</th>
+                            <th>Vendor</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Date</th>
+                        </tr>
+                        @foreach (var item in Model.Orders.OrderByDescending(x => x.Date).Take(20))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Meal.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Vendor.BrandName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Phone)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default" id="panel2">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-target="#collapseTwo"
+                   href="#collapseTwo" class="collapsed">
+                    Reviews
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">
+                @foreach (var item in Model.Reviews.Take(20))
+                {
+                    <dl class="dl-horizontal">
+                        <dt>Meal : </dt>
+                        <dd>@item.Meal.Name</dd>
+                        <dt>Review : </dt>
+                        <dd>@item.Text</dd>
+                    </dl>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

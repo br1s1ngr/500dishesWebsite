@@ -1,0 +1,147 @@
+﻿@model _500Dishes.Models.RegisterViewModel
+
+@{ 
+    ViewBag.Title = "Sign Up";
+    Layout = "~/Views/Shared/_AccountLayoutPage.cshtml";
+}
+
+
+<main class="main-content">
+    <div class="login-hero">
+        <div class="login-hero-overlay">
+            <div class="container">
+                <div class="login-hero-content">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-8 center-block" id="main-auth-div">
+                            <div class="auth-div">
+                                <div class="row">
+                                    <div class="col-md-12 auth-form-section">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <div class="center-block text-center">
+                                                    <a href="/"><img src="~/Images/spoty-foodsII.jpg" class="img-responsive" alt="logo" style="height: 200px; margin:0px auto;"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new {}))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                                            </div>
+
+                                                <div class="form-group">
+                                                    @*<div class="input-group">*@
+                                                        @*<span class="input-group-addon" id="basic-addon1">+234</span>*@
+                                                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control"@*, style = "max-width: 225px;"*@ } })
+                                                    @*</div>*@
+                                                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label" })
+                                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                                    @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                    </div>
+                                                </div>
+                                                <input type="submit" class="text-uppercase btn btn-success btn-lg btn-block"
+                                                       value="signup">
+
+                                                <p>
+                                                    By clicking Signup, I agree to SotyFood's <a href="#">Terms of Service</a>
+                                                    & <a href="#">Privacy Policy</a>
+                                                </p>
+                                                <hr>
+                                                <p class="text-center">
+                                                    Already have a SpotyFood account? <a href="@Url.Action("Login", "Account")">Login</a>
+                                                </p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="info-section">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="h3 page-header text-uppercase">contact</div>
+                    <div class="h4 text-muted">
+                        <p><i class="icon ion-android-pin"></i> 278 Park Street, Lekki Phase One, Lagos Nigeria</p>
+
+                        <p><i class="icon ion-android-mail"></i> hello@spotyfoods.com</p>
+
+                        <p><i class="icon ion-android-phone-portrait"></i> 09053588783</p>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="h3 page-header text-uppercase">hours</div>
+                    <ul class="list-unstyled">
+                        <li class="h4 text-muted">Monday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Tuesday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Wednesday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Thursday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Friday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Saturday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Sunday 11:30AM - 9:00PM</li>
+                    </ul>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="h3 page-header text-uppercase">newsletter</div>
+                    <div class="h4 text-muted text-uppercase">
+                        Join our mailing list to receive news, announcements and promotions from spoty foods
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control text-uppercase" placeholder="Your Email Address"
+                                   name="subscribe_email">
+                        </div>
+                        <input type="submit" value="subscribe" class="btn btn-base text-uppercase">
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/login.js"></script>
+}
+

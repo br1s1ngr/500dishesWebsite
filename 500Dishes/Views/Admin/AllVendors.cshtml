@@ -1,0 +1,207 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.Vendor>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "AllVendors";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>AllVendors</h2>
+
+@if (TempData["VendorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissable" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @TempData["VendorMessage"].ToString()
+    </div>
+}
+
+<table class="table table-responsive table-hover table-condensed">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+           Brand Name
+        </th>
+        <th>
+           Phone
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Verified
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>*@
+        <th>
+            Meal Price
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+                <br />
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrandName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Verified)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ImagePath)
+            </td>*@
+            @if (item.Verified == false)
+            {
+                <td contenteditable="true" id="price-for-@item.VendorID">
+                    @Html.DisplayFor(modelItem => item.MealPrice)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.VendorID }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.VendorID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.VendorID })*@
+                    <a href="#verify-vendor" data-toggle="modal" class="btn btn-default" data-brandname="@item.BrandName" data-vendorid="@item.VendorID">Verify</a>
+                </td>
+            }
+            else
+            {
+                <td contenteditable="true" id="price-for-@item.VendorID">
+                    @Html.DisplayFor(modelItem => item.MealPrice)
+                </td>
+                <td><a href="#edit-vendor" data-toggle="modal" class="btn btn-warning" data-brandname="@item.BrandName" data-vendorid="@item.VendorID">Edit</a></td>
+            }
+            <td>@Html.ActionLink("Select", "Vendor", new { id = @item.VendorID }, new { @class= "btn"} )</td>
+        </tr>
+    }
+
+</table>
+
+<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+    @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("AllVendors", new { page }))
+</div>
+
+<div class="modal fade" id="verify-vendor" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Verify Vendor</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="modal-body-text"></p>
+                <div id="delete-form">
+                    @using (Html.BeginForm("VerifyVendor", "Admin", new { }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" class="vendor-id">
+                        <input type="hidden" name="price" class="price">
+                        <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit-vendor" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Verify Vendor</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="modal-body-text"></p>
+                <div id="delete-form">
+                    @using (Html.BeginForm("VerifyVendor", "Admin", new { }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" class="vendor-id">
+                        <input type="hidden" name="price" class="price">
+                        <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#verify-vendor').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('vendorid')
+                var name = button.data('brandname')
+                var price = $('#price-for-' + id).html()
+                //console.log('price => ' + price)
+                //console.log("name => " + name)
+                /*console.log("id => "+ id)
+                console.log("name => " + name)
+                console.log("count => " + count)*/
+                //modal.find('#subName').html(name)
+                var modal = $(this)
+                if (price > 100) {
+                    modal.find('#modal-body-text').html("Are you sure you would like to submit changes for <strong>" + name + "</strong> ?")
+                    modal.find('#delete-form').css("display", "block")
+                    modal.find('.vendor-id').val(id)
+                    modal.find('.price').val(price)
+                }
+                else {
+                    modal.find('#modal-body-text').html("Please ensure correct value is entered for price")
+                    modal.find('#delete-form').css("display", "none")
+                }
+
+            });
+
+            $('#edit-vendor').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('vendorid')
+                var name = button.data('brandname')
+                var price = $('#price-for-' + id).html()
+                //console.log('price => ' + price)
+                //console.log("name => " + name)
+                /*console.log("id => "+ id)
+                console.log("name => " + name)
+                console.log("count => " + count)*/
+                //modal.find('#subName').html(name)
+                var modal = $(this)
+                if (price > 100) {
+                    modal.find('#modal-body-text').html("Are you sure you would like to submit changes for <strong>" + name + "</strong> ?")
+                    modal.find('#delete-form').css("display", "block")
+                    modal.find('.vendor-id').val(id)
+                    modal.find('.price').val(price)
+                }
+                else {
+                    modal.find('#modal-body-text').html("Please ensure correct value is entered for price")
+                    modal.find('#delete-form').css("display", "none")
+                }
+
+            });
+
+        });
+    </script>
+}
+

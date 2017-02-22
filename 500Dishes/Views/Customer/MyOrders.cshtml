@@ -1,0 +1,157 @@
+﻿@*@model PagedList.IPagedList<_500Dishes.Models.Order>
+@using PagedList.Mvc;*@
+
+@model IEnumerable<_500Dishes.Models.Order>
+
+    @{
+        ViewBag.Title = "MyOrders";
+        Layout = "~/Views/Shared/_ClientLayoutPage.cshtml";
+    }
+
+    <h2>MyOrders</h2>
+    @if (TempData["OrderMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @Html.Raw(TempData["OrderMessage"] as string)
+        </div>
+    }
+@if (TempData["ReviewMessageSuccess"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @Html.Raw(TempData["ReviewMessageSuccess"] as string)
+    </div>
+}
+@if (TempData["ReviewMessageError"] != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @Html.Raw(TempData["ReviewMessageError"] as string)
+    </div>
+}
+
+    <table class="table table-responsive table-condensed table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Meal.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AltPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Meal.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendor.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AltPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @if (item.Review == null) { 
+                <a data-toggle="modal" href="#add-review" class="btn" data-orderid="@item.OrderID" data-mealid="@item.MealID" data-vendorid="@item.VendorID" data-customerid="@item.Customer.UserID" data-mealname="@item.Meal.Name">Add a Review</a>
+                }
+            </td>
+    </tr>
+}
+
+</table>
+
+@*<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+    @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Locations", new { page }))
+</div>*@
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('#add-review').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var orderId = button.data('orderid')
+                var mealId = button.data('mealid')
+                var vendorId = button.data('vendorid')
+                var userId = button.data('customerid')
+                var mealName = button.data('mealname')
+                var modal = $(this)
+                modal.find('.order-id').val(orderId)
+                modal.find('.user-id').val(userId)
+                modal.find('.meal-id').val(mealId)
+                modal.find('.vendor-id').val(vendorId)
+                modal.find('#mealName').html(mealName)
+            });
+
+        });
+    </script>
+}
+
+<div class="modal fade" id="add-review" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Review</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Post a review for <span class="text-info" id="mealName"></span></p>
+                
+                @using (Html.BeginForm("AddReview", "Customer", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="orderID" class="order-id">
+                    <input type="hidden" name="userID" class="user-id">
+                    <input type="hidden" name="vendorID" class="vendor-id">
+                    <input type="hidden" name="mealID" class="meal-id">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Review: </label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" placeholder="enter your review here...." name="text"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Rating: </label>
+                            <div class="col-md-10">
+                                @Html.DropDownList("Rating", null, "Select a rating", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

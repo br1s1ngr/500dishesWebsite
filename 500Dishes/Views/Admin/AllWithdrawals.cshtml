@@ -1,0 +1,65 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.Transaction>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "AllWithdrawals";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>AllWithdrawals</h2>
+
+@if (TempData["WithdrawalMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissable" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @TempData["WithdrawalMessage"].ToString()
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Vendor
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Extra Text
+        </th>
+        <th>
+            Date
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vendor.FirstName)
+            <br />
+            @Html.DisplayFor(modelItem => item.Vendor.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExtraText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+        </td>
+    </tr>
+}
+</table>
+
+<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+    @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("AllWithdrawals", new { page }))
+</div>

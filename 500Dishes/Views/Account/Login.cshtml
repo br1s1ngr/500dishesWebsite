@@ -1,0 +1,183 @@
+﻿@model _500Dishes.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_AccountLayoutPage.cshtml";
+}
+
+<main class="main-content">
+    <div class="login-hero">
+        <div class="login-hero-overlay">
+
+            @if (TempData["EmailMessage"] != null)
+            {
+                <div class="alert-dismissable alert alert-danger container">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong class="text-center">@(TempData["EmailMessage"] as string)</strong>
+                </div>
+            }
+            @if (TempData["MailError"] != null) 
+            {
+                <div class="alert-dismissable alert alert-danger container">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong class="text-center">@(TempData["MailError"] as string)</strong>
+                </div>
+            }
+
+            <div class="container">
+                <div class="login-hero-content">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-8 center-block" id="main-auth-div">
+                            <div class="auth-div">
+                                <div class="row">
+                                    <div class="col-md-12 auth-form-section">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <div class="center-block text-center">
+                                                    <a href="/"><img src="~/Images/spoty-foodsII.jpg" class="img-responsive" alt="logo" style="height: 200px; margin:0px auto;"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login-form js-login-form" }))
+                                        {
+                                            Html.AntiForgeryToken();
+                                            <div class="h3 text-uppercase text-center">login</div>
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                <label>Password</label>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 pull-left">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                           @Html.EditorFor(model => model.RememberMe) <span class="text-uppercase">Stay logged in</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-4 col-xs-5 pull-right">
+                                                    <a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a>
+                                                </div>
+                                            </div>
+                                            <input type="submit" class="text-uppercase btn btn-success btn-lg btn-block"
+                                                   value="login">
+
+                                            <div class="form-footer">
+                                                <hr>
+                                                <p class="text-center">
+                                                    New to SpotyFood? <a href="@Url.Action("SignUp", "Account")">
+                                                        Create
+                                                        an
+                                                        account here
+                                                    </a>
+                                                </p>
+                                                <p class="text-center">
+                                                    Interested in working with us? <a href="@Url.Action("VendorSignUp", "Account")">
+                                                        Become a vendor
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        }
+                                        @*<form class="signup-form js-sign-up-form">
+                                            <div class="h3 text-uppercase text-center">signup</div>
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" name="name">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" type="email"
+                                                       name="email">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" type="password"
+                                                       name="password">
+                                                <label>Password</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" type="password"
+                                                       name="confirm_password">
+                                                <label>Confirm Password</label>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                </div>
+                                            </div>
+                                            <input type="submit" class="text-uppercase btn btn-success btn-lg btn-block"
+                                                   value="signup">
+
+                                            <p>
+                                                By clicking Signup, I agree to Treebo's <a href="#">Terms of Service</a>
+                                                & <a href="#">Privacy Policy</a>
+                                            </p>
+                                            <hr>
+                                            <p class="text-center">
+                                                Already have a SpotyFood account? <a href="#" class="js-login">Login</a>
+                                            </p>
+                                        </form>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="info-section">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="h3 page-header text-uppercase">contact</div>
+                    <div class="h4 text-muted">
+                        <p><i class="icon ion-android-pin"></i> 278 Park Street, Lekki Phase One, Lagos Nigeria</p>
+
+                        <p><i class="icon ion-android-mail"></i> hello@spotyfoods.com</p>
+
+                        <p><i class="icon ion-android-phone-portrait"></i> 09053588783</p>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="h3 page-header text-uppercase">hours</div>
+                    <ul class="list-unstyled">
+                        <li class="h4 text-muted">Monday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Tuesday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Wednesday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Thursday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Friday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Saturday 11:30AM - 9:00PM</li>
+                        <li class="h4 text-muted">Sunday 11:30AM - 9:00PM</li>
+                    </ul>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="h3 page-header text-uppercase">newsletter</div>
+                    <div class="h4 text-muted text-uppercase">
+                        Join our mailing list to receive news, announcements and promotions from spoty foods
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control text-uppercase" placeholder="Your Email Address"
+                                   name="subscribe_email">
+                        </div>
+                        <input type="submit" value="subscribe" class="btn btn-base text-uppercase">
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/login.js"></script>
+}

@@ -1,0 +1,117 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.VendorLocation>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Locations";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+}
+
+<h2>Locations</h2>
+
+<a id="createNewLocation" data-toggle="modal" href="#add-location" class="btn btn-default">
+    Add Location
+</a>
+<br />
+<br />
+
+<div class="container">
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <strong class="col-xs-7">@item.Location.Name</strong>
+            <span class="col-xs-5">
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-info" }) |*@
+                <a data-toggle="modal" href="#delete-location" class="btn btn-danger" data-whatever="@item.ID" data-name="@item.Location.Name">Delete</a>
+            </span>
+        </div>
+        <br />
+    }
+</div>
+<br />
+<hr />
+<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+    @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Locations", new { page }))
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            @*$(".createNewLocation").click(function () {
+                $.ajax({
+                    url: '@Url.Action("AddLocation", "Vendor")',
+                    success: function (result) {
+                        $(".newLocation").html(result);
+                    }
+                });
+            });*@
+
+            //$(".delete-button").click(function () {
+            //    var button = $(this);
+            //    var id = button.data("id")
+            //    var modal = $("#delete-location")
+            //    modal.find('#location-id').val(id)
+            //});
+
+            $('#add-location').on('show.bs.modal', function (e) {
+                $.ajax({
+                    url: '@Url.Action("AddLocation", "Vendor")',
+                    success: function (result) {
+                        $("#newLocation").html(result);
+                    }
+                });
+            });
+
+            $('#delete-location').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('whatever')
+                var name = button.data('name')
+                var modal = $(this)
+                modal.find('.location-id').val(id)
+                modal.find('#locationName').html(name)
+            });
+
+        });
+    </script>
+}
+
+
+<div class="modal fade" id="add-location" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Add Location</h2>
+            </div>
+            <div class="modal-body">
+                <div id="newLocation">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-location" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Delete Location</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Are you sure you want to remove <strong><span class="text-info" id="locationName"></span></strong> from your list of locations ?</p>
+                @using (Html.BeginForm("DeleteLocation", "Vendor", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" class="location-id">
+                    <button type="submit" class="btn btn-danger text-uppercase">Delete</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

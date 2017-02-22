@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpotyFoods | @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700|Scope+One" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+</head>
+<body class="spoty-foods">
+    <header>
+        <nav class="navbar navbar-default hidden-xs" id="secondary-nav">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li><a href="#"><i class="icon ion-social-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon ion-social-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon ion-social-instagram"></i></a></li>
+                </ul>
+                @if (!Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("Login", "Account")" class="text-uppercase"><i class="icon ion-log-in"></i> login</a></li>
+                        <li>
+                            <a href="@Url.Action("SignUp", "Account")" class="text-uppercase"><i class="icon ion-android-person-add"></i> register</a>
+                        </li>
+                        <li><a href="@Url.Action("VendorSignUp", "Account")" class="text-uppercase"><i class="icon ion-coffee"></i> become a vendor</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (User.IsInRole("A"))
+                        {
+                            <li><a href="@Url.Action("Index", "Admin")" class="text-uppercase"><i class="icon glyphicon glyphicon-user"></i> @User.Identity.Name</a></li>
+                        }
+                        @if (User.IsInRole("V"))
+                        {
+                            <li><a href="@Url.Action("Index", "Vendor")" class="text-uppercase"><i class="icon glyphicon glyphicon-user"></i> @User.Identity.Name</a></li>
+                        }
+                        @if (User.IsInRole("U"))
+                        {
+                            <li><a href="@Url.Action("Index", "Customer")" class="text-uppercase"> <i class="icon glyphicon glyphicon-user"></i>  @User.Identity.Name</a></li>
+                        }
+                        <li><a href="@Url.Action("SignOut", "Account")" class="text-uppercase"> <i class="icon glyphicon glyphicon-log-out"></i>  Log Out</a></li>
+                    </ul>
+                }
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-default" id="primary-nav">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/Images/spoty-foodsII.jpg" alt="spoty foods logo" class="logo" /></a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("Index", "Home")" class="text-uppercase">home</a></li>
+                        <li><a href="@Url.Action("OurClients", "Home")" class="text-uppercase">our clients</a></li>
+                        @if (!Request.IsAuthenticated)
+                        {
+                            @*<li><a href="@Url.Action("AvailableMenu", "Home")" class="text-uppercase">menu</a></li>*@
+                            <li><a href="@Url.Action("Login", "Account")" class="text-uppercase hidden-lg hidden-md hidden-sm">login</a></li>
+                            <li><a href="@Url.Action("SignUp", "Account")" class="text-uppercase hidden-lg hidden-md hidden-sm">register</a></li>
+                            <li><a href="@Url.Action("VendorSignUp", "Account")" class="text-uppercase hidden-lg hidden-md hidden-sm">become a vendor</a></li>
+                        }
+                        else
+                        {
+                            if (User.IsInRole("A"))
+                            {
+                                <li><a href="@Url.Action("Index", "Admin")" class="text-uppercase hidden-lg hidden-md hidden-sm">@User.Identity.Name</a></li>
+                            }
+                            if (User.IsInRole("V"))
+                            {
+                                <li><a href="@Url.Action("Index", "Vendor")" class="text-uppercase hidden-lg hidden-md hidden-sm">@User.Identity.Name</a></li>
+                            }
+                            if (User.IsInRole("U"))
+                            {
+                                <li><a href="@Url.Action("Index", "Customer")" class="text-uppercase hidden-lg hidden-md hidden-sm">@User.Identity.Name</a></li>
+                            }
+                            <li><a href="@Url.Action("SignOut", "Account")" class="text-uppercase hidden-lg hidden-md hidden-sm">Log Out</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="account-hero">
+            <div class="account-hero-overlay">
+                <div class="account-hero-content">
+                    <div class="row">
+        @*<div class="col-md-12">
+            <div class="h3 text-uppercase text-center">
+                Account Settings
+            </div>
+        </div>
+    </div>*@
+                    <div class="row hidden-lg hidden-md hidden-sm">
+                        <div class="col-md-12 text-center">
+                            <div class="center-block" style="margin-top: 120px;">
+                                <figure class="avatar avatar-xxl">
+                                    <img src="~/Images/Vendors/@ViewBag.VendorImage" id="profile-image-xs">
+                                    <input type="file" style="display:none;" id="file-elem-xs" accept="image/*">
+                                    <a href="#"><i class="icon ion-android-camera" id="file-select-xs"></i></a>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    <div class="stuff hidden-xs">
+                        <div class="container">
+                            <div class="row text-center">
+                                <div class="center-block">
+                                    <div class="col-sm-3">
+                                        <figure class="avatar avatar-xxl profile-image">
+                                            <img src="~/Images/Vendors/@ViewBag.VendorImage" id="profile-image">
+                                            <input type="file" style="display:none;" id="file-elem" accept="image/*">
+                                            <a href="#"><i class="icon ion-android-camera" id="file-select"></i></a>
+                                        </figure>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="h4"><i class="icon ion-android-person"></i> @ViewBag.VendorName</div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="h4"><i class="icon ion-android-pin"></i> @ViewBag.VendorBrandName</div>
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="h4"><i class="icon ion-android-star"></i> @ViewBag.VendorReviews Reviews</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="account-settings">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <ul class="nav nav-pills nav-stacked " id="account-settings-nav" role="tablist">
+                            @*<li class="list-group-item">@Html.ActionLink("My Bookings", "")</li>*@
+                            <li role="presentation" class="@ViewBag.Meals"> @Html.ActionLink("Food Menu", "Meals", "Vendor")</li>
+                            <li role="presentation" class="@ViewBag.Locations"> @Html.ActionLink("Delivery Locations", "Locations", "Vendor")</li>
+                            @*<li class="list-group-item">@Html.ActionLink("Profile", "")</li>*@
+                            <li  role="presentation" class="@ViewBag.Orders">@Html.ActionLink("Orders", "MyOrders", "Vendor")</li>
+                            <li  role="presentation" class="@ViewBag.Transactions">@Html.ActionLink("Transactions", "Transactions", "Vendor")</li>
+                            <li  role="presentation" class="@ViewBag.Withdraw">@Html.ActionLink("Withdraw Earnings", "WithdrawEarnings", "Vendor")</li>
+                            <li  role="presentation" class="@ViewBag.Profile">@Html.ActionLink("Edit Profile", "EditProfile", "Vendor")</li>
+                            <li  role="presentation" class="@ViewBag.BankDetails">@Html.ActionLink("Bank Details", "BankDetails", "Vendor")</li>
+                            @*<li class="list-group-item">@Html.ActionLink("Address Settings", "")</li>*@
+                            <li  role="presentation" class="@ViewBag.EditPassword">@Html.ActionLink("Edit Password", "EditPassword", "Vendor")</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </section>
+
+            <div class="container">
+                <section class="info-section">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="h3 page-header text-uppercase">contact</div>
+                            <div class="h4 text-muted">
+                                <p><i class="icon ion-android-pin"></i> 278 Park Street, Lekki Phase One, Lagos Nigeria</p>
+
+                                <p><i class="icon ion-android-mail"></i> hello@spotyfoods.com</p>
+
+                                <p><i class="icon ion-android-phone-portrait"></i> 09053588783</p>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="h3 page-header text-uppercase">hours</div>
+                            <ul class="list-unstyled">
+                                <li class="h4 text-muted">Monday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Tuesday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Wednesday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Thursday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Friday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Saturday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Sunday 11:30AM - 9:00PM</li>
+                            </ul>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="h3 page-header text-uppercase">newsletter</div>
+                            <div class="h4 text-muted text-uppercase">
+                                Join our mailing list to receive news, announcements and promotions from spoty foods
+                            </div>
+                            <form>
+                                <div class="form-group">
+                                    <input type="email" class="form-control text-uppercase" placeholder="Your Email Address"
+                                           name="subscribe_email">
+                                </div>
+                                <input type="submit" value="subscribe" class="btn btn-base text-uppercase">
+                            </form>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+</main>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 pull-left">
+                        <p>&copy; @DateTime.Now.Year ELIXIR. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 col-xs-6 pull-right">
+                        <ul class="list-unstyled">
+                            <li class="pull-right"><a href="#"><i class="icon ion-social-instagram"></i></a></li>
+                            <li class="pull-right"><a href="#"><i class="icon ion-social-twitter"></i></a></li>
+                            <li class="pull-right"><a href="#"><i class="icon ion-social-facebook"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+
+    <script>
+        var fileElemXs = document.querySelector('#file-elem-xs');
+        var fileSelectXs = document.querySelector('#file-select-xs');
+
+        fileSelectXs.addEventListener("click", function (e) {
+            if (fileElem) {
+                fileElem.click();
+            }
+            e.preventDefault();
+        }, false);
+
+        fileElemXs.addEventListener('change', function () {
+            var formData = new FormData();
+            var fileArray = fileElem.files;
+            for (var i = 0; i < fileArray.length; i++) {
+                var file = fileArray[i];
+                var imgXs = document.querySelector('#profile-image-xs');
+                imgXs.file = file;
+                formData.append(file.name, file);
+                var reader = new FileReader();
+                reader.addEventListener('load', function (e) {
+                    imgXs.src = e.target.result;
+                });
+                reader.readAsDataURL(file);
+            }
+            $.ajax({
+                url: '@Url.Action("UploadImage", "Vendor")',
+                type: "POST",
+                contentType: false,
+                datatype: 'json',
+                processData: false,
+                data: formData,
+                success: function (response) { },
+                error: function (error) { }
+            });
+        });
+
+        var fileElem = document.querySelector('#file-elem');
+        var fileSelect = document.querySelector('#file-select');
+
+        fileSelect.addEventListener("click", function (e) {
+            if (fileElem) {
+                fileElem.click();
+            }
+            e.preventDefault();
+        }, false);
+
+        fileElem.addEventListener('change', function () {
+            var formData = new FormData();
+            var fileArray = fileElem.files;
+            for (var i = 0; i < fileArray.length; i++) {
+                var file = fileArray[i];
+                var img = document.querySelector('#profile-image');
+                img.file = file;
+                formData.append(file.name, file);
+                var reader = new FileReader();
+                reader.addEventListener('load', function (e) {
+                    img.src = e.target.result;
+                });
+                reader.readAsDataURL(file);
+            }
+            $.ajax({
+                url: '@Url.Action("UploadImage", "Vendor")',
+                type: "POST",
+                contentType: false,
+                datatype: 'json',
+                processData: false,
+                data: formData,
+                success: function (response) { },
+                error: function (error) { }
+            });
+        });
+    </script>
+
+</body>
+</html>

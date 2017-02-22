@@ -1,0 +1,185 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.Meal>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="menu-page">
+        @if (TempData["SubscriptionError"] != null)
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @(TempData["SubscriptionError"] as string)
+            </div>
+        }
+        @if (TempData["MealError"] != null)
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @(TempData["MealError"] as string)
+            </div>
+        }
+        @if (TempData["MealSuccess"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @(TempData["MealSuccess"] as string)
+            </div>
+        }
+
+    <main class="main-content">
+        <section class="menu-hero">
+            <div class="menu-hero-overlay">
+                <div class="container">
+                    <div class="menu-hero-content">
+                        <div class="h2 text-center text-uppercase">Our delicious variety of food</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+            <section class="search-section hide">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="center-block">
+                            <div class="h2 text-uppercase">
+                                Available menu
+                                @if (Session["LocationName"] != null)
+                                { <span class="badge">@(Session["LocationName"] as string) </span> }
+                            </div>
+                            @using (Html.BeginForm("AvailableMenu", "Home", FormMethod.Get))
+                            {
+                                <div class="form-group form-inline">
+                                    <label class="sr-only">Search</label>
+                                    @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control menu-search", placeholder = "name of meal...", type = "search" })
+                                    <button type="submit" style="margin-left: 5px;" class="btn btn-warning"> <i class="glyphicon glyphicon-search"></i> </button>
+                                </div>
+                            }
+                            <div>
+                                <button id="locationBtn" class="btn">Change Location</button>
+                                @using (Html.BeginForm("AvailableMenu", "Home", FormMethod.Get, new { style = "display: inline" }))
+                                {
+                                    <span class="form-group form-inline" id="locationForm" style="display: none;">
+                                        @Html.DropDownList("location", ViewBag.Locations as SelectList, "Select a location", new { @class = "form-control" })
+                                        <input type="submit" value="View Meals in Location" class="btn btn-danger" />
+                                        @*@Ajax.ActionLink("View Meals in Location", "AvailableMenu", null, new AjaxOptions { UpdateTargetId = "meals" }, new { @class = "btn btn-info" })*@
+                                        <span class="clearfix"></span>
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="container-fluid" id="menu-section">
+            <section class="menu-section">
+                <div class="row">
+                   @foreach (var item in Model)
+                   {
+                    <div class="col-sm-3">
+                        <div class="thumbnail">
+                            <img src="~/Images/Meals/@item.ImagePath" class="img-responsive" style="height: 200px;" />
+                            <div class="caption">
+                                <h4 class="text-uppercase">@item.Name</h4>
+                                <p>@item.Description</p>
+                                <div style="display:block">
+                                    <img class="img-circle pull-left" style="width:50px; height:50px; margin-right: 20px;" src="~/Images/Vendors/@item.Vendor.ImagePath" />
+                                    <div>
+                                        <small class="text-success text-uppercase">@item.Vendor.BrandName</small>
+                                        <br />
+                                        <span>
+                                            Rating --
+                                            @if (item.Reviews.Count > 0)
+                                            { @item.GetRating();
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                                <br />
+                                @Html.ActionLink("Order Meal", "OrderMeal", "Customer", new { id = @item.ID, returnUrl = @Request.Url.AbsoluteUri }, new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                   }
+                </div>
+                <div class="container pagination">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+                    @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Locations", new { page }))
+                </div>
+            </section>
+        </div>
+
+        <div class="container">
+            <section class="info-section">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">contact</div>
+                        <div class="h4 text-muted">
+                            <p><i class="icon ion-android-pin"></i> 278 Park Street, Lekki Phase One, Lagos Nigeria</p>
+
+                            <p><i class="icon ion-android-mail"></i> hello@spotyfoods.com</p>
+
+                            <p><i class="icon ion-android-phone-portrait"></i> 09053588783</p>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">hours</div>
+                        <ul class="list-unstyled">
+                            <li class="h4 text-muted">Monday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Tuesday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Wednesday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Thursday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Friday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Saturday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Sunday 11:30AM - 9:00PM</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">newsletter</div>
+                        <div class="h4 text-muted text-uppercase">
+                            Join our mailing list to receive s, announcements and promotions from spoty foods
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <input type="email" class="form-control text-uppercase" placeholder="Your Email Address"
+                                       name="subscribe_email">
+                            </div>
+                            <input type="submit" value="subscribe" class="btn btn-base text-uppercase">
+                        </form>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    
+    <span class="clearfix"></span>
+</div>
+
+@section Scripts {
+
+    <script src="@Url.Content("~/Scripts/classie.js")"></script>
+    <script src="@Url.Content("~/Scripts/menu.js")"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#locationBtn').click(function (event) {
+                $('#locationForm').toggle();
+            });
+
+            $(window).scroll(function () {
+                $('.search-section').addClass('show');
+                if ($(window).scrollTop() === 0) {
+                    $('.search-section').removeClass('show');
+                }
+            });
+        });
+    </script>
+}

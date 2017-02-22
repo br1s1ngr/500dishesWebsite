@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.Meal>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "OrderMeal";
+    Layout = "~/Views/Shared/_ClientLayoutPage.cshtml";
+}
+
+@if (TempData["SubscriptionError"] != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @(TempData["SubscriptionError"] as string)
+    </div>
+}
+@if (TempData["MealSuccess"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @(TempData["MealSuccess"] as string)
+    </div>
+}
+
+
+<h2>OrderMeal</h2>
+
+@using (Html.BeginForm("OrderMeal", "Customer", FormMethod.Get))
+{
+    <div class="form-group">
+        <label class="sr-only">Search</label>
+        @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control input-lg", placeholder = "Enter a search term here...", type = "search" })
+    </div>
+}
+
+@foreach (var item in Model)
+    {
+<div class="col-sm-4 col-xs-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <img src="~/Images/Meals/@item.ImagePath" class="img-responsive" style="height: 200px;" />
+        </div>
+        <div class="panel-body">
+            <div>
+                <span class="lead text-muted">@item.Name</span><br />
+                @item.Description
+                <br />
+                @*@Html.ActionLink("Pick", "AddMeal", "Customer", new { id = @item.ID }, new { @class = "btn btn-default" })
+                    <br />*@
+                <div style="display:block">
+                    <img class="img-responsive pull-left" style="width:40px; height:40px; margin-right: 20px;" src="~/Images/Vendors/@item.Vendor.ImagePath" />
+                    <div>
+                        <span class="text-danger">@item.Vendor.BrandName</span>
+                        <br />
+                        <span>
+                            Rating--
+                            @if (item.Reviews.Count > 0)
+                            { @item.GetRating();
+                            }
+                        </span>
+                    </div>
+                </div>
+                <br />
+                @Html.ActionLink("Order", "OrderMeal", "Customer", new { id = @item.ID }, new { @class = "btn btn-info" })
+            </div>
+        </div>
+    </div>
+</div>
+    <span class="clearfix"></span>
+    }
+
+<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+    @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("OrderMeal", new { page }))
+</div>
+

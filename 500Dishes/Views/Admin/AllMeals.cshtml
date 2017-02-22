@@ -1,0 +1,138 @@
+﻿@model PagedList.IPagedList<_500Dishes.Models.Meal>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Meals";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+@if (TempData["SubscriptionError"] != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @(TempData["SubscriptionError"] as string)
+    </div>
+}
+@if (TempData["MealSuccess"] != null)
+{
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @(TempData["MealSuccess"] as string)
+    </div>
+}
+
+
+<h2>Meals</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Vendor
+        </th>
+        <th>
+            Name
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>*@
+        <th>
+            Orders
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Verified
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.Vendor.BrandName != null)
+                { @Html.DisplayFor(modelItem => item.Vendor.BrandName) }
+            </td>
+            <td>
+                @Html.ActionLink(item.Name, "Vendor", new { id = item.ID })
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.ImagePath)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Orders.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Verified)
+            </td>
+            @if (item.Verified == false)
+            {
+                <td>
+                    <a href="#verify-meal" data-toggle="modal" class="btn btn-default" data-mealname="@item.Name" data-mealid="@item.ID">Verify</a>
+                </td>
+            }
+            @*
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>*@
+        </tr>
+    }
+
+</table>
+
+<div class="container">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of
+    @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("AllMeals", new { page }))
+</div>
+
+<div class="modal fade" id="verify-meal" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title text-center text-danger">Verify Meal</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="modal-body-text">Please confirm verification of <strong><span class="meal-name"></span></strong> ?</p>
+                <div id="delete-form">
+                    @using (Html.BeginForm("VerifyMeal", "Admin", new { }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" class="meal-id">
+                        <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#verify-meal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var id = button.data('mealid')
+                var name = button.data('mealname')
+                /*console.log("id => "+ id)
+                console.log("name => " + name)
+                console.log("count => " + count)*/
+                //modal.find('#subName').html(name)
+                var modal = $(this)
+                modal.find('.meal-id').val(id)
+                modal.find('.meal-name').html(name)
+            });
+
+        });
+    </script>
+}
+

@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpotyFoods | @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700|Scope+One" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+</head>
+<body class="spoty-foods">
+    <header>
+        <nav class="navbar navbar-default hidden-xs" id="secondary-nav">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li><a href="#"><i class="icon ion-social-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon ion-social-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon ion-social-instagram"></i></a></li>
+                </ul>
+                @if (!Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("Login", "Account")" class="text-uppercase"><i class="icon ion-log-in"></i> login</a></li>
+                        <li>
+                            <a href="@Url.Action("SignUp", "Account")" class="text-uppercase"><i class="icon ion-android-person-add"></i> register</a>
+                        </li>
+                        <li><a href="@Url.Action("VendorSignUp", "Account")" class="text-uppercase"><i class="icon ion-coffee"></i> become a vendor</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (User.IsInRole("A"))
+                        {
+                            <li><a href="@Url.Action("Index", "Admin")" class="text-uppercase"><i class="icon glyphicon glyphicon-user"></i> @User.Identity.Name</a></li>
+                        }
+                        @if (User.IsInRole("V"))
+                        {
+                            <li><a href="@Url.Action("Index", "Vendor")" class="text-uppercase"><i class="icon glyphicon glyphicon-user"></i> @User.Identity.Name</a></li>
+                        }
+                        @if (User.IsInRole("U"))
+                        {
+                            <li><a href="@Url.Action("Index", "Customer")" class="text-uppercase"> <i class="icon glyphicon glyphicon-user"></i>  @User.Identity.Name</a></li>
+                        }
+                        <li><a href="@Url.Action("SignOut", "Account")" class="text-uppercase"> <i class="icon glyphicon glyphicon-log-out"></i>  Log Out</a></li>
+                    </ul>
+                }
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-default" id="primary-nav">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/Images/spoty-foodsII.jpg" alt="spoty foods logo" class="logo" /></a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("Index", "Home")" class="text-uppercase">home</a></li>
+                        <li><a href="@Url.Action("OurClients", "Home")" class="text-uppercase">our clients</a></li>
+                        @if (!Request.IsAuthenticated)
+                        {
+                            @*<li><a href="@Url.Action("AvailableMenu", "Home")" class="text-uppercase">menu</a></li>*@
+                            <li><a href="@Url.Action("Login", "Account")" class="text-uppercase hidden-lg hidden-md hidden-sm">login</a></li>
+                            <li><a href="@Url.Action("SignUp", "Account")" class="text-uppercase hidden-lg hidden-md hidden-sm">register</a></li>
+                            <li><a href="@Url.Action("VendorSignUp", "Account")" class="text-uppercase hidden-lg hidden-md hidden-sm">become a vendor</a></li>
+                        }
+                        else
+                        {
+                            if (User.IsInRole("A"))
+                            {
+                                <li><a href="@Url.Action("Index", "Admin")" class="text-uppercase hidden-lg hidden-md hidden-sm">@User.Identity.Name</a></li>
+                            }
+                            if (User.IsInRole("V"))
+                            {
+                                <li><a href="@Url.Action("Index", "Vendor")" class="text-uppercase hidden-lg hidden-md hidden-sm">@User.Identity.Name</a></li>
+                            }
+                            if (User.IsInRole("U"))
+                            {
+                                <li><a href="@Url.Action("Index", "Customer")" class="text-uppercase hidden-lg hidden-md hidden-sm">@User.Identity.Name</a></li>
+                            }
+                            <li><a href="@Url.Action("SignOut", "Account")" class="text-uppercase hidden-lg hidden-md hidden-sm">Log Out</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="account-settings">
+            <div class="container body-content">
+                <div class="row">
+                    <div class="col-sm-2" id="menu_list" style="margin-top: 10px;">
+                        <ul class="nav nav-pills nav-stacked " id="account-settings-nav" role="tablist">
+                            <li role="presentation" class="@ViewBag.Orders">@Html.ActionLink("Orders", "Orders", "Admin")</li>
+                            <li role="presentation" class="@ViewBag.Withdrawals">@Html.ActionLink("Withdrawals", "AllWithdrawals", "Admin")</li>
+                            <li role="presentation" class="@ViewBag.Customers">@Html.ActionLink("Customers", "AllCustomers", "Admin")</li>
+                            <li role="presentation" class="@ViewBag.Vendors">@Html.ActionLink("Vendors", "AllVendors", "Admin")</li>
+                            <li role="presentation" class="@ViewBag.Subscriptions">@Html.ActionLink("Subscriptions", "Subscriptions", "Admin")</li>
+                            <li role="presentation" class="@ViewBag.Meals">@Html.ActionLink("Meals", "AllMeals", "Admin")</li>
+                            @*<li class="list-group-item">@Html.ActionLink("eWallet", "")</li>
+            <li class="list-group-item">@Html.ActionLink("Withdraw Earnings", "")</li>
+            <li class="list-group-item">@Html.ActionLink("Account Settings", "")</li>
+            <li class="list-group-item">@Html.ActionLink("Payment Method", "")</li>
+            <li class="list-group-item">@Html.ActionLink("Withdrawal Settings", "")</li>*@
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </section>
+
+            <div class="container">
+                <section class="info-section">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="h3 page-header text-uppercase">contact</div>
+                            <div class="h4 text-muted">
+                                <p><i class="icon ion-android-pin"></i> 278 Park Street, Lekki Phase One, Lagos Nigeria</p>
+
+                                <p><i class="icon ion-android-mail"></i> hello@spotyfoods.com</p>
+
+                                <p><i class="icon ion-android-phone-portrait"></i> 09053588783</p>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="h3 page-header text-uppercase">hours</div>
+                            <ul class="list-unstyled">
+                                <li class="h4 text-muted">Monday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Tuesday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Wednesday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Thursday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Friday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Saturday 11:30AM - 9:00PM</li>
+                                <li class="h4 text-muted">Sunday 11:30AM - 9:00PM</li>
+                            </ul>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="h3 page-header text-uppercase">newsletter</div>
+                            <div class="h4 text-muted text-uppercase">
+                                Join our mailing list to receive news, announcements and promotions from spoty foods
+                            </div>
+                            <form>
+                                <div class="form-group">
+                                    <input type="email" class="form-control text-uppercase" placeholder="Your Email Address"
+                                           name="subscribe_email">
+                                </div>
+                                <input type="submit" value="subscribe" class="btn btn-base text-uppercase">
+                            </form>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+</main>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-6 pull-left">
+                    <p>&copy; @DateTime.Now.Year ELIXIR. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 col-xs-6 pull-right">
+                    <ul class="list-unstyled">
+                        <li class="pull-right"><a href="#"><i class="icon ion-social-instagram"></i></a></li>
+                        <li class="pull-right"><a href="#"><i class="icon ion-social-twitter"></i></a></li>
+                        <li class="pull-right"><a href="#"><i class="icon ion-social-facebook"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

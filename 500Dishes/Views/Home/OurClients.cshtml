@@ -1,0 +1,153 @@
+﻿@model _500Dishes.Models.OurClientsViewModel
+
+@{
+    ViewBag.Title = "OurClients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="clients">
+    <main class="main-content">
+        <section class="clients-hero">
+            <div class="clients-hero-overlay">
+                <div class="clients-hero-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-5 col-xs-8">
+                                <div class="h3 text-uppercase">
+                                    Our Clients
+                                </div>
+                                <p class="h4">
+                                    Lorem Khaled Ipsum is a major key to success. They key is to have every key,
+                                    the key to
+                                    open every door. Watch your back, but more importantly when you get out the shower, dry
+                                    your back, it’s a cold world out there. Give thanks to the most high
+                                </p>
+                                <a href="@Url.Action("SignUp", "Account")" class="text-uppercase btn btn-base">Register as a client</a>
+                                <a href="@Url.Action("VendorSignUp", "Account")" class="text-uppercase btn btn-warning">Join our vendors</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @if (Model.Reviews.Count >= 1)
+        {
+            <section class="client-testimonials">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 testimonial-image-section hidden-xs">
+                            <div class="testimonial-image"></div>
+                        </div>
+                        <div class="col-sm-6 client-testimonials-text">
+                            <div class="h2 text-center">What our clients like about us</div>
+                            <div class="testimonials">
+                                @foreach (var item in Model.Reviews)
+                                {
+                                    <div class="featured-testimonials text-center">
+                                        <div class="center-block">
+                                            <figure class="avatar avatar-xxl">
+                                                <img src="~/Images/avatar-1.png" alt="">
+                                            </figure>
+                                            <blockquote>
+                                                <span class="h4">
+                                                    @item.Text
+                                                </span>
+                                                <small>Rating --  @item.Rating</small>
+                                                <footer>@item.Customer.Name <cite title="Source Title"> @item.Meal.Name</cite></footer>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+        @if (Model.Vendors.Count > 0)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="h2 text-uppercase text-center padded-text">Our most appreciated vendors</div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="featured-clients">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="center-block">
+                            @foreach (var item in Model.Vendors)
+                            {
+                                <div class="col-sm-3 col-xs-6">
+                                    <img src="~/Images/Vendors/@item.ImagePath" alt="@(item.BrandName)" style="height: 200px;">
+                                    <div class="caption">
+                                        <h4 class="text-uppercase text-danger">@item.BrandName</h4>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+
+        <div class="container">
+            <section class="info-section">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">contact</div>
+                        <div class="h4 text-muted">
+                            <p><i class="icon ion-android-pin"></i> 278 Park Street, Lekki Phase One, Lagos Nigeria</p>
+
+                            <p><i class="icon ion-android-mail"></i> hello@spotyfoods.com</p>
+
+                            <p><i class="icon ion-android-phone-portrait"></i> 09053588783</p>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">hours</div>
+                        <ul class="list-unstyled">
+                            <li class="h4 text-muted">Monday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Tuesday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Wednesday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Thursday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Friday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Saturday 11:30AM - 9:00PM</li>
+                            <li class="h4 text-muted">Sunday 11:30AM - 9:00PM</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="h3 page-header text-uppercase">newsletter</div>
+                        <div class="h4 text-muted text-uppercase">
+                            Join our mailing list to receive news, announcements and promotions from spoty foods
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <input type="email" class="form-control text-uppercase" placeholder="Your Email Address"
+                                       name="subscribe_email">
+                            </div>
+                            <input type="submit" value="subscribe" class="btn btn-base text-uppercase">
+                        </form>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.testimonials').flickity({
+                autoPlay: 1800
+            });
+        })
+    </script>
+}
